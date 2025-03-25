@@ -77,8 +77,7 @@ func (h httpServer) PostKv(c *gin.Context) {
 	if errors.Is(domain.ErrKeyExists, err) {
 		c.JSON(http.StatusConflict, gin.H{"error": "key already exists"})
 		return
-	}
-	if err != nil {
+	} else if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
