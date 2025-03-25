@@ -6,3 +6,5 @@
 * Cпецификация openapi в директории api
 * Вид логов:
 ![image](https://github.com/user-attachments/assets/341b4954-f139-4d1d-8492-0cfaa74ef52b)
+
+* Локально можно развернуть в контейнерах командой docker compose -f ./deploy/compose.yml up
