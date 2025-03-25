@@ -1,0 +1,6 @@
+# yaml-language-server: ...
+package: generated
+generate:
+  gin-server: true
+  models: true
+output: generated/api.gen.go

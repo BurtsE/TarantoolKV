@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Key-Value Store API
+  version: 1.0.0
+  description: API для хранения и управления произвольными JSON-объектами по ключам.
+servers:
+  - url: http://api.example.com/v1
+    description: Production server
+
+paths:
+  /kv:
+    post:
+      summary: Создать новую пару ключ-значение
+      description: Создает новую пару ключ-значение. Если ключ уже существует, возвращает ошибку 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  example: "test"
+                value:
+                  type: object
+                  description: Произвольный JSON-объект
+                  example: {"foo": "bar"}
+              required:
+                - key
+                - value
+      responses:
+        '201':
+          description: Пара ключ-значение успешно создана.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "test"
+        '400':
+          description: Некорректное тело запроса.
+        '409':
+          description: Ключ уже существует.
+
+  /kv/{id}:
+    put:
+      summary: Обновить значение по ключу
+      description: Обновляет значение для существующего ключа. Если ключ не существует, возвращает ошибку 404.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Ключ, значение которого нужно обновить.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: object
+                  description: Произвольный JSON-объект
+                  example: {"foo": "bar"}
+              required:
+                - value
+      responses:
+        '200':
+          description: Значение успешно обновлено.
+        '400':
+          description: Некорректное тело запроса.
+        '404':
+          description: Ключ не найден.
+
+    get:
+      summary: Получить значение по ключу
+      description: Возвращает значение для указанного ключа. Если ключ не существует, возвращает ошибку 404.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Ключ, значение которого нужно получить.
+      responses:
+        '200':
+          description: Значение успешно получено.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Произвольный JSON-объект
+                example: {"foo": "bar"}
+        '404':
+          description: Ключ не найден.
+
+    delete:
+      summary: Удалить пару ключ-значение
+      description: Удаляет пару ключ-значение по указанному ключу. Если ключ не существует, возвращает ошибку 404.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Ключ, который нужно удалить.
+      responses:
+        '204':
+          description: Пара ключ-значение успешно удалена.
+        '404':
+          description: Ключ не найден.
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+security:
+  - ApiKeyAuth: []
