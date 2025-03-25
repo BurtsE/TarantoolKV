@@ -2,7 +2,9 @@ package tarantool
 
 import (
 	"TarantoolKV/internal/application/core/domain"
+	"TarantoolKV/internal/config"
 	"context"
+	"fmt"
 	"github.com/tarantool/go-iproto"
 	"github.com/tarantool/go-tarantool/v2"
 	"log"
@@ -16,10 +18,14 @@ type TarantoolDB struct {
 func NewStorage() TarantoolDB {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+	user := config.GetTarantoolUser()
+	passwd := config.GetTarantoolPassword()
+	host := config.GetTarantoolHost()
+	log.Println(user, passwd, host)
 	dialer := tarantool.NetDialer{
-		Address:  "127.0.0.1:3301",
-		User:     "guest",
-		Password: "",
+		Address:  fmt.Sprintf("%s:3301", host),
+		User:     user,
+		Password: passwd,
 	}
 	opts := tarantool.Opts{
 		Timeout: time.Second,

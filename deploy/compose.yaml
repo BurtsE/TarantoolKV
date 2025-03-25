@@ -3,12 +3,35 @@ version: '3.8'
 services:
   tarantool:
     image: tarantool/tarantool:latest
+    restart: always
+    environment:
+      - TARANTOOL_USER_NAME=${TARANTOOL_USER_NAME}
+      - TARANTOOL_USER_PASSWORD=${TARANTOOL_USER_PASSWORD}
+      - TARANTOOL_PORT=3301
     ports:
       - "3301:3301"
     volumes:
-      - ./scripts:/opt/tarantool
+      - ./scripts/init:/opt/tarantool
       - tarantool_data:/var/lib/tarantool
     command: tarantool /opt/tarantool/init.lua
+    networks:
+      - internal
+  service:
+    environment:
+      - APPLICATION_PORT=8080
+      - TARANTOOL_USER_NAME=${TARANTOOL_USER_NAME}
+      - TARANTOOL_USER_PASSWORD=${TARANTOOL_USER_PASSWORD}
+      - TARANTOOL_HOST=tarantool
+    build:
+      context: ../
+      dockerfile: ./deploy/Dockerfile
+    restart: always
 
+    ports:
+      - "8080:8080"
+    networks:
+      - internal
+networks:
+  internal:
 volumes:
   tarantool_data:

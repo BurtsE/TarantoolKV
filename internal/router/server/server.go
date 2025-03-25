@@ -3,6 +3,7 @@ package server
 import (
 	"TarantoolKV/generated"
 	"TarantoolKV/internal/application/core/domain"
+	"TarantoolKV/internal/config"
 	"context"
 	"errors"
 	"fmt"
@@ -24,6 +25,7 @@ type httpServer struct {
 }
 
 func SetupHTTPServer(app application) *http.Server {
+	port := config.GetApplicationPort()
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
@@ -46,7 +48,7 @@ func SetupHTTPServer(app application) *http.Server {
 	generated.RegisterHandlers(r, server)
 	s := &http.Server{
 		Handler: r,
-		Addr:    "0.0.0.0:8080",
+		Addr:    fmt.Sprintf(":%s", port),
 	}
 	return s
 }

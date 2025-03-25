@@ -28,7 +28,7 @@ func main() {
 	log.Println("creating app...")
 	app := service.NewService(&db)
 
-	log.Println("initializing server server...")
+	log.Println("initializing server...")
 	httpServer := server.SetupHTTPServer(app)
 
 	g, gCtx := errgroup.WithContext(ctx)

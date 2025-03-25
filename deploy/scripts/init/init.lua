@@ -6,6 +6,14 @@ box.cfg {
 
 -- Create a space (table) for users
 box.schema.space.create('database', { if_not_exists = true })
+-- Create admin user with password
+box.schema.user.create('my_user', {
+    password = '123456',
+    if_not_exists = true
+})
+
+-- Grant permissions
+box.schema.user.grant('my_user', 'read,write,execute', 'universe', nil, {if_not_exists = true})
 
 -- Define field formats (optional but recommended)
 box.space.database:format({
@@ -19,8 +27,5 @@ box.space.database:create_index('primary', {
     parts = { 'key' },
     if_not_exists = true,
 })
-
--- Insert sample data
-box.space.database:insert({'Alice', {foo = "bar"}})
 
 print('Tarantool database initialized!')

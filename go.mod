@@ -5,6 +5,7 @@ go 1.23
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/oapi-codegen/runtime v1.1.1
+	github.com/tarantool/go-iproto v1.1.0
 	github.com/tarantool/go-tarantool/v2 v2.3.0
 	golang.org/x/sync v0.10.0
 )
@@ -32,7 +33,6 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/stretchr/testify v1.10.0 // indirect
-	github.com/tarantool/go-iproto v1.1.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect

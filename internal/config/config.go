@@ -8,11 +8,15 @@ import (
 func GetEnv() string {
 	return getEnvironmentValue("ENV")
 }
-
-func GetDataSourceURL() string {
-	return ""
+func GetTarantoolUser() string {
+	return getEnvironmentValue("TARANTOOL_USER_NAME")
 }
-
+func GetTarantoolPassword() string {
+	return getEnvironmentValue("TARANTOOL_USER_PASSWORD")
+}
+func GetTarantoolHost() string {
+	return getEnvironmentValue("TARANTOOL_HOST")
+}
 func GetApplicationPort() string {
 	port := getEnvironmentValue("APPLICATION_PORT")
 	return port

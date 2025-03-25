@@ -1,12 +1,10 @@
 credentials:
   users:
-    sampleuser:
+    my_user:
       password: '123456'
       privileges:
         - permissions: [ read, write ]
-          spaces: [ space ]
-        - permissions: [ execute ]
-          functions: [ get_bands_older_than ]
+          spaces: [ database ]
 groups:
   group001:
     replicasets:
@@ -17,4 +15,4 @@ groups:
               listen:
                 - uri: '127.0.0.1:3301'
 app:
-  file: './scripts/init.lua'
+  file: 'init.lua'
