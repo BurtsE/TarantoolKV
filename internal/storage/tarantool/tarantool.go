@@ -21,7 +21,6 @@ func NewStorage() TarantoolDB {
 	user := config.GetTarantoolUser()
 	passwd := config.GetTarantoolPassword()
 	host := config.GetTarantoolHost()
-	log.Println(user, passwd, host)
 	dialer := tarantool.NetDialer{
 		Address:  fmt.Sprintf("%s:3301", host),
 		User:     user,
